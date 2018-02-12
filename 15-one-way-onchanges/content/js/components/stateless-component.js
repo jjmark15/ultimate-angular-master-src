@@ -1,16 +1,19 @@
 var statelessComponent = {
 	bindings: {
 		user: '<',
-		onUpdate: '&'
+		onUpdate: '&' // aliasing the onUpdate function defined in stateful template
 	},
 	controller: function () {
 		this.$onChanges = function (changes) {
+			console.log('changes')
 			if (changes.user) {
+				console.log('user changes')
 				this.user = angular.copy(this.user);
 			}
 		};
-		this.updateUser = function () {
-			this.onUpdate({
+		this.updateUser = function () { // function called on ng-click
+			console.log('returning event')
+			this.onUpdate({ // calling onUpdate function passing $event conatining mutated (and copied) this.user
 				$event: {
 					user: this.user
 				}
